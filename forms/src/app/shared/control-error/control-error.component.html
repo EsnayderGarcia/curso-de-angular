@@ -1,0 +1,15 @@
+<div *ngIf="verificaValidTouched()">
+  <p class="field-error" *ngIf="isRequired()">
+    O campo {{nomeCampo}} é obrigatório!
+  </p>
+
+  <p class="field-error" *ngIf="hasMinLengthOrMaxLength()">
+    O campo deve ter no mínimo 3 e no máximo 25 carácteres!
+  </p>
+
+  <p class="field-error" *ngIf="hasEmailValidation()">
+    Informe um email válido!
+  </p>
+</div>
+
+
