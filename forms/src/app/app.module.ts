@@ -6,8 +6,8 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {DataDrivenModule} from "./pages/data-driven/data-driven.module";
 import {RouterModule} from "@angular/router";
+import {DropdownService} from "./services/dropdown.service";
 
 @NgModule({
   declarations: [
@@ -19,10 +19,9 @@ import {RouterModule} from "@angular/router";
     FormsModule,
     ReactiveFormsModule, //Módulo que nos permite trabalhar com formulários reativos no angular
     HttpClientModule,
-    DataDrivenModule,
     RouterModule.forRoot(AppRoutes)
   ],
-  providers: [],
+  providers: [DropdownService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

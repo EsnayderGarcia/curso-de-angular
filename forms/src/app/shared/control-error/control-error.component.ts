@@ -9,6 +9,7 @@ import {FormGroup} from "@angular/forms";
 export class ControlErrorComponent implements OnInit {
   @Input() formGroup!: FormGroup;
   @Input() nomeCampo!: string;
+  @Input() descricaoCampo!: string;
 
   constructor() { }
 
@@ -16,11 +17,11 @@ export class ControlErrorComponent implements OnInit {
   }
 
   verificaValidTouched() {
-    return !this.formGroup.get(this.nomeCampo)?.valid && this.formGroup.get(this.nomeCampo)?.touched
+    return !this.formGroup.get(this.nomeCampo)?.valid && this.formGroup.get(this.nomeCampo)?.touched;
   }
 
   hasMinLengthOrMaxLength() {
-    let input = this.formGroup.get(this.nomeCampo)
+    let input = this.formGroup.get(this.nomeCampo);
     return input?.hasError('minlength') || input?.hasError('maxlength');
   }
 
@@ -30,7 +31,7 @@ export class ControlErrorComponent implements OnInit {
   }
 
   hasEmailValidation() {
-    let input = this.formGroup.get(this.nomeCampo)
+    let input = this.formGroup.get(this.nomeCampo);
     return input?.hasError('email');
   }
 }
