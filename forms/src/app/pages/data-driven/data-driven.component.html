@@ -175,6 +175,9 @@
         <input type="checkbox" formControlName="termo"> Aceito os Termos.
       </label>
     </div>
+    <app-control-error [formGroup]="form"
+            [descricaoCampo]="'Termo'"
+            [nomeCampo]="'termo'"></app-control-error>
   </div>
 
   <div class="buttons mb-5">

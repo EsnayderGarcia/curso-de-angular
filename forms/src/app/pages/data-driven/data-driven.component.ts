@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {IEndereco} from "../../interfaces/IEndereco";
-import {DropdownService} from "../../services/dropdown.service";
-import {IEstadoBrasileiro} from "../../interfaces/IEstadoBrasileiro";
-import {Observable} from "rxjs";
-import {ConsultaCepService} from "../../services/consulta-cep.service";
-import {IFramework} from "../../interfaces/IFramework";
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { IEndereco } from "../../interfaces/IEndereco";
+import { DropdownService } from "../../services/dropdown.service";
+import { IEstadoBrasileiro } from "../../interfaces/IEstadoBrasileiro";
+import { Observable } from "rxjs";
+import { ConsultaCepService } from "../../services/consulta-cep.service";
+import { IFramework } from "../../interfaces/IFramework";
+import { FormValidation } from "../../shared/FormValidation";
 
 @Component({
   selector: 'app-data-driven',
@@ -21,7 +22,7 @@ export class DataDrivenComponent implements OnInit {
   tipoEnderecos!: any[];
   frameworks: IFramework[] = [];
   frameworksCliente: IFramework[] = [];
-  editar: boolean = false;
+  editar: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,10 +41,10 @@ export class DataDrivenComponent implements OnInit {
       sobrenome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
       email: [null, [Validators.required, Validators.email]],
       tipoEndereco: ['c', [Validators.required]],
-      termo: [null, [Validators.required]],
+      termo: [false, FormValidation.checkboxValidator],
       frameworks: this.buildFrameworks(),
       endereco: this.formBuilder.group({
-        cep: [null, [Validators.required]],
+        cep: [null, [Validators.required, FormValidation.cepValidator]],
         rua: [null, [Validators.required]],
         complemento: [null],
         numero: [null],
@@ -67,12 +68,11 @@ export class DataDrivenComponent implements OnInit {
         .filter((v: any) => v !== null)
     });
 
-    this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit)).subscribe(dados =>
-      {
-        console.log(dados)
-        this.resetarForm();
-      },
-      (error: any) => alert('Deu Ruim, meu amigo!')
+    this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit)).subscribe(dados => {
+      console.log(valueSubmit);
+      this.resetarForm();
+    },
+      (error: any) => alert('Houve ao salvar os dados, tente novamente!')
     );
   }
 
@@ -93,30 +93,18 @@ export class DataDrivenComponent implements OnInit {
 
   consultaCep() {
     let cep = this.form.get('endereco.cep')?.value;
+    cep = cep.replace(/\D/g, '');
+    const regex = /^[0-9]{8}$/;
 
-    if (cep != null && cep !== '') {
-      const respostaConsultaCep = this.consultaCepService.consultaCep(cep);
-      if (respostaConsultaCep == null) {
-        alert('Informe um cep válido!');
-        this.limparCamposObrigatoriosEndereco()
-      } else
-        this.consultaCepService.consultaCep(cep)?.subscribe(data => this.popularFormCamposEndereco(data));
-    } else {
-      alert('Informe um cep válido!');
-      this.limparCamposObrigatoriosEndereco()
-    }
-  }
-
-  limparCamposObrigatoriosEndereco() {
-    this.form.patchValue({
-      endereco: {
-        cep: null,
-        rua: null,
-        bairro: null,
-        cidade: null,
-        estado: null
-      }
-    });
+    if (regex.test(cep))
+      this.consultaCepService.consultaCep(cep).subscribe(
+        (data: any) => {
+          if (data.erro)
+            alert('Cep inválido ou não encontrado: Verifique os dados e tente novamente');
+          else 
+            this.popularFormCamposEndereco(data);
+        }
+      );
   }
 
   private popularFormCamposEndereco(data: IEndereco) {
@@ -151,7 +139,7 @@ export class DataDrivenComponent implements OnInit {
   buildFrameworks() {
     this.obterFrameworks();
     const values = this.frameworks.map(f => new FormControl(this.editar ? this.preencherCheckBox(f) : false));
-    return this.formBuilder.array(values);
+    return this.formBuilder.array(values, FormValidation.requiredMinCheckBoxs(1));
   }
 
   obterFormArrayControls() {

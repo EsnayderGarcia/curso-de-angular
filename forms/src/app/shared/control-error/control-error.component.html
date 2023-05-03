@@ -10,6 +10,14 @@
   <p class="field-error" *ngIf="hasEmailValidation()">
     Informe um email válido!
   </p>
+
+  <p class="field-error" *ngIf="cepIsInvalid()">
+    Informe um cep válido!
+  </p>
+
+  <p class="field-error" *ngIf="checkboxIsInvalid()">
+    Você deve concordar com os termos!
+  </p>
 </div>
 
 

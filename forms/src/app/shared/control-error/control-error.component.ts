@@ -34,4 +34,14 @@ export class ControlErrorComponent implements OnInit {
     let input = this.formGroup.get(this.nomeCampo);
     return input?.hasError('email');
   }
+
+  cepIsInvalid() {
+    let input = this.formGroup.get(this.nomeCampo);
+    return input?.hasError('cepInvalido');
+  }
+
+  checkboxIsInvalid() {
+    let input = this.formGroup.get(this.nomeCampo);
+    return input?.hasError('checkboxInvalido');
+  }
 }
