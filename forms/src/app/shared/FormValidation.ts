@@ -7,7 +7,7 @@ export class FormValidation {
         .map(v => v.value)
         .reduce((total, currentValue) => currentValue ? total+1 : total, 0);
 
-      return totalChecked >= min ? null : {required: true}
+      return totalChecked >= min ? null : {minCheckBoxs: true}
     };
   }
 
@@ -22,8 +22,23 @@ export class FormValidation {
       return null;
   }
 
-  public static checkboxValidator(formControl: FormControl) {
+  public static termoValidator(formControl: FormControl) {
     let input = formControl.value;
-    return input ? null : { checkboxInvalido: true };
+    return input ? null : { termoRequired: true };
+  }
+
+  public static validatorMessage(propertyName: any, campoDescricao: string, validatorValue?: any) {
+    const validators: any = {
+      'required': `Campo ${campoDescricao} é obrigatório!`,
+      'email': `Campo ${campoDescricao} inválido!`,
+      'cepInvalido': `Campo ${campoDescricao} inválido!`,
+      'minlength': `Campo ${campoDescricao} deve ter o mínimo de ${validatorValue?.['minlength']?.requiredLength} caracteres!`,
+      'equalTo': `Campo ${campoDescricao} e email devem ser iguais`,
+      'minCheckBoxs': `Selecione pelo menos um framework!`,
+      'termoRequired': 'Você deve concordar com os termos'
+    }
+
+    return validators[propertyName];
   }
 }
+

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IEstadoBrasileiro} from "../interfaces/IEstadoBrasileiro";
 import {IFramework} from "../interfaces/IFramework";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +70,9 @@ export class DropdownService {
         desc: 'Django'
       }
     ];
+  }
+
+  validarNomeInformado(nome: string) {
+      return this.http.get<boolean>(`http://localhost:8080/clients/validar-nome/${nome}`);
   }
 }

@@ -7,10 +7,10 @@
       <input type="text" class="form-control"
              id="nome"
              formControlName="nome"
-             [ngClass]="aplicaCssErro('nome')">
-      <app-control-error [formGroup]="form"
-                         [descricaoCampo]="'nome'"
-                         [nomeCampo]="'nome'"></app-control-error>
+             [ngClass]="aplicaCssErro('nome')"
+             (blur)="validarNomeInformado()">
+      <app-error-message [control]="getControl('nome')"
+                         descricaoCampo="nome"></app-error-message>
     </div>
 
     <div class="col-xs-12 col-sm-6">
@@ -19,9 +19,8 @@
              id="sobrenome"
              formControlName="sobrenome"
              [ngClass]="aplicaCssErro('sobrenome')">
-      <app-control-error [formGroup]="form"
-                         [descricaoCampo]="'sobrenome'"
-                         [nomeCampo]="'sobrenome'"></app-control-error>
+      <app-error-message [control]="getControl('sobrenome')"
+             descricaoCampo="sobrenome"></app-error-message>
     </div>
   </div>
 
@@ -32,9 +31,20 @@
              id="email"
              formControlName="email"
              [ngClass]="aplicaCssErro('email')">
-      <app-control-error [formGroup]="form"
-                         [descricaoCampo]="'email'"
-                         [nomeCampo]="'email'"></app-control-error>
+      <app-error-message [control]="getControl('email')"
+             descricaoCampo="email"></app-error-message>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <label for="confirmar-email" class="form-label">Confirmar Email</label>
+      <input type="email" class="form-control"
+             id="confirmar-email"
+             formControlName="confirmarEmail"
+             [ngClass]="aplicaCssErro('confirmarEmail')">
+      <app-error-message [control]="getControl('confirmarEmail')"
+             descricaoCampo="confirmar email"></app-error-message>
     </div>
   </div>
 
@@ -47,9 +57,8 @@
                formControlName="cep"
                [ngClass]="aplicaCssErro('endereco.cep')"
                (blur)="consultaCep()">
-        <app-control-error [formGroup]="form"
-                           [descricaoCampo]="'cep'"
-                           [nomeCampo]="'endereco.cep'"></app-control-error>
+        <app-error-message [control]="getControl('endereco.cep')"
+                           descricaoCampo="cep"></app-error-message>
       </div>
 
       <div class="col-xs-12 col-sm-3">
@@ -75,9 +84,8 @@
                id="rua"
                formControlName="rua"
                [ngClass]="aplicaCssErro('endereco.rua')">
-        <app-control-error [formGroup]="form"
-                           [descricaoCampo]="'rua'"
-                           [nomeCampo]="'endereco.rua'"></app-control-error>
+        <app-error-message [control]="getControl('endereco.rua')"
+               descricaoCampo="rua"></app-error-message>
       </div>
 
       <div class="col-xs-12 col-sm-6">
@@ -87,9 +95,8 @@
                id="bairro"
                formControlName="bairro"
                [ngClass]="aplicaCssErro('endereco.bairro')">
-        <app-control-error [formGroup]="form"
-                           [descricaoCampo]="'bairro'"
-                           [nomeCampo]="'endereco.bairro'"></app-control-error>
+        <app-error-message [control]="getControl('endereco.bairro')"
+               descricaoCampo="bairro"></app-error-message>
       </div>
     </div>
 
@@ -101,9 +108,7 @@
                id="cidade"
                formControlName="cidade"
                [ngClass]="aplicaCssErro('endereco.cidade')">
-        <app-control-error [formGroup]="form"
-                           [descricaoCampo]="'cidade'"
-                           [nomeCampo]="'endereco.cidade'"></app-control-error>
+        
       </div>
 
       <div class="col-xs-12 col-sm-4">
@@ -115,9 +120,8 @@
           <option [value]="null" disabled>Escolha o Estado</option>
           <option *ngFor="let estado of estadosBrasileiros$ | async" [value]="estado.sigla">{{estado.nome}}</option>
         </select>
-        <app-control-error [formGroup]="form"
-                           [descricaoCampo]="'estado'"
-                           [nomeCampo]="'endereco.estado'"></app-control-error>
+        <app-error-message [control]="getControl('endereco.estado')"
+                           descricaoCampo="estado"></app-error-message>
       </div>
 
       <div class="col-xs-12 col-sm-4">
@@ -129,9 +133,6 @@
           <option [value]="null" disabled>Escolha um Ponto Turistico</option>
           <option *ngFor="let p of pontosTuristicos" [value]="p.nome">{{p.desc}}</option>
         </select>
-        <app-control-error [formGroup]="form"
-                           [descricaoCampo]="'Pontos Turisticos'"
-                           [nomeCampo]="'pontosTuristicos'"></app-control-error>
       </div>
     </div>
   </div>
@@ -148,9 +149,6 @@
         </label>
       </div>
     </div>
-    <app-control-error [formGroup]="form"
-                       [descricaoCampo]="'Tipo de Endereço'"
-                       [nomeCampo]="'tipoEndereco'"></app-control-error>
   </div>
 
   <div class="mt-2 col-md-3">
@@ -165,6 +163,7 @@
                  type="checkbox"> {{ frameworks[i].desc }}
         </label>
       </div>
+      <app-error-message [control]="getControl('frameworks')"></app-error-message>
     </div>
   </div>
 
@@ -175,9 +174,7 @@
         <input type="checkbox" formControlName="termo"> Aceito os Termos.
       </label>
     </div>
-    <app-control-error [formGroup]="form"
-            [descricaoCampo]="'Termo'"
-            [nomeCampo]="'termo'"></app-control-error>
+    <app-error-message [control]="getControl('termo')"></app-error-message>
   </div>
 
   <div class="buttons mb-5">

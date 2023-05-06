@@ -8,6 +8,8 @@ import { Observable } from "rxjs";
 import { ConsultaCepService } from "../../services/consulta-cep.service";
 import { IFramework } from "../../interfaces/IFramework";
 import { FormValidation } from "../../shared/FormValidation";
+import { CustomValidators } from 'ng2-validation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-data-driven',
@@ -28,20 +30,23 @@ export class DataDrivenComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private dropDownService: DropdownService,
-    private consultaCepService: ConsultaCepService
+    private consultaCepService: ConsultaCepService,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
+    let email = new FormControl('', [Validators.required, Validators.email]);
     if (this.editar)
       this.carregarCheboxs();
 
     this.form = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
-      sobrenome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
-      email: [null, [Validators.required, Validators.email]],
+      sobrenome: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      email: email,
+      confirmarEmail: [null, [CustomValidators.equalTo(email)]],
       tipoEndereco: ['c', [Validators.required]],
-      termo: [false, FormValidation.checkboxValidator],
+      termo: [false, FormValidation.termoValidator],
       frameworks: this.buildFrameworks(),
       endereco: this.formBuilder.group({
         cep: [null, [Validators.required, FormValidation.cepValidator]],
@@ -71,6 +76,8 @@ export class DataDrivenComponent implements OnInit {
     this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit)).subscribe(dados => {
       console.log(valueSubmit);
       this.resetarForm();
+      console.log('PASSOU AQUI!')
+
     },
       (error: any) => alert('Houve ao salvar os dados, tente novamente!')
     );
@@ -120,6 +127,10 @@ export class DataDrivenComponent implements OnInit {
     });
   }
 
+  getControl(controlName: string): FormControl {
+    return this.form.get(controlName) as FormControl;
+  }
+
   private obterEstadosBrasileiros() {
     this.estadosBrasileiros$ = this.dropDownService.obterEstadosBrasileiros();
   }
@@ -156,6 +167,17 @@ export class DataDrivenComponent implements OnInit {
         return true;
     }
     return false;
+  }
+
+  validarNomeInformado() {
+    const campoNome = this.form.get('nome');
+    if(campoNome?.valid)
+      this.dropDownService.validarNomeInformado(campoNome.value).subscribe(response => {
+        if(response) {
+          alert(`O nome ${campoNome.value} não está disponível`)
+          campoNome.setValue(null);
+        }
+      });
   }
 }
 

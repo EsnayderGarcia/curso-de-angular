@@ -3,14 +3,14 @@ import {CommonModule} from '@angular/common';
 import {DataDrivenComponent} from "./data-driven.component";
 import {RouterModule} from "@angular/router";
 import {DataDrivenRoutes} from "./data-driven.routes";
-import {ControlErrorComponent} from "../../shared/control-error/control-error.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ErrorMessageComponent } from 'src/app/shared/error-message/error-message.component';
 
 
 @NgModule({
   declarations: [
     DataDrivenComponent,
-    ControlErrorComponent,
+    ErrorMessageComponent
   ],
   imports: [
     CommonModule,
