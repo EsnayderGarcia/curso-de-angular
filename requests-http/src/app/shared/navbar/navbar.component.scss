@@ -1,0 +1,25 @@
+header {
+    background-color: #1550f5;
+}
+
+#logo {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+
+#link {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-right: .4rem;
+    transition: .3s;
+}
+
+#link:hover {
+    background-color: #7395f074;
+}
+
+ .link-active {
+   background-color: #7395f074;
+ }
