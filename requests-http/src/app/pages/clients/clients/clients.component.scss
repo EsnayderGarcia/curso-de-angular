@@ -1,0 +1,25 @@
+@import 'vars.scss';
+
+.card-header {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-action {
+  border: none;
+  font-weight: bold;
+  background-color: $cor-principal;
+  color: $cor-secundaria;
+  padding:  0 .3rem 0 .3rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-action:hover {
+    background-image: linear-gradient(to left, #1550F5, #638ae6);
+}
+
+
+.size-page-select {
+  display: flex;
+  gap: .8rem;
+}
