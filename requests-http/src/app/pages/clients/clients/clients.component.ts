@@ -38,4 +38,8 @@ export class ClientsComponent implements OnInit {
         this.spinner.hide();
       });
   }
+
+  manterDigitoZero() {
+    return {showMaskTyped: true};
+  }
 }

@@ -1,10 +1,12 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ClientsComponent } from './clients/clients.component';
-import { ClientsRoutingModule } from './clients-routing.module';
-import { CpfPipe } from 'src/app/pipes/cpf.pipe';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
+import { CpfPipe } from 'src/app/pipes/cpf.pipe';
+
 import { ClientsFormComponent } from './clients-form/clients-form.component';
+import { ClientsRoutingModule } from './clients-routing.module';
+import { ClientsComponent } from './clients/clients.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { ClientsFormComponent } from './clients-form/clients-form.component';
     CommonModule,
     ClientsRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskModule.forChild(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

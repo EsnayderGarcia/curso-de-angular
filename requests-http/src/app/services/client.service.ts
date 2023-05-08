@@ -26,8 +26,8 @@ export class ClientService {
   obterUriConsulta(queryParameters: IQueryParameters[]) {
     let uri = '';
     uri = this.API + '?';
-
-    queryParameters.map((q) => {
+              
+    queryParameters.map(q => {
       if (q.value !== null) uri += `${q.name}=${q.value}&`;
     });
 
@@ -39,7 +39,7 @@ export class ClientService {
       .get<Page<IClient>>(this.obterUriConsulta(queryParameters))
       .pipe(
         take(1),
-        catchError((e) => {
+        catchError(e => {
           this.spinner.hide();
           this.alertModalService.abrirModal(
             'Desculpe! Não foi possível obter os dados do servidor, tente novamente mais tarde.',

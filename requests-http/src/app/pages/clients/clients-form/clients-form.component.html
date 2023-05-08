@@ -39,12 +39,13 @@
     <div class="col-sm-4">
       <label for="income">Salário<span id="flag-required">*</span></label>
       <input
-        type="number"
+        type="text"
         class="form-control mt-1"
         id="income"
         placeholder="Ex: 2.750,00"
         formControlName="income"
         [ngClass]="aplicaCssErro('income')"
+        mask="separator.2" thousandSeparator="." prefix="R$"
       />
     </div>
     <div class="col-sm-4">
@@ -60,6 +61,6 @@
   </div>
   <div class="buttons mb-5">
     <button type="submit" class="btn btn-outline-primary mt-3" style="margin-right: 0.5rem;" (click)="onSubmit()">Enviar</button>
-    <button type="button" class="btn btn-outline-danger mt-3">Cancelar</button>
+    <button type="button" class="btn btn-outline-danger mt-3" routerLink="/clients">Cancelar</button>
   </div>
 </form>
