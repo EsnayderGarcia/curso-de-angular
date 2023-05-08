@@ -1,0 +1,65 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-sm-8">
+      <label for="name">Nome<span id="flag-required">*</span></label>
+      <input
+        type="text"
+        class="form-control mt-1"
+        id="name"
+        placeholder="Ex: Antonio Ozíris"
+        formControlName="name"
+        [ngClass]="aplicaCssErro('name')"
+      />
+    </div>
+    <div class="col-sm-4">
+      <label for="birthDate">Data de Nascimento<span id="flag-required">*</span></label>
+      <input
+        type="date"
+        class="form-control mt-1"
+        id="birthDate"
+        formControlName="birthDate"
+        [ngClass]="aplicaCssErro('birthDate')"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <label for="cpf">CPF<span id="flag-required">*</span></label>
+      <input
+        type="text"
+        class="form-control mt-1"
+        id="cpf"
+        placeholder="Ex: xxx.xxx.xxx-xx"
+        formControlName="cpf"
+        [ngClass]="aplicaCssErro('cpf')"
+        mask="000.000.000-00"
+      />
+    </div>
+    <div class="col-sm-4">
+      <label for="income">Salário<span id="flag-required">*</span></label>
+      <input
+        type="number"
+        class="form-control mt-1"
+        id="income"
+        placeholder="Ex: 2.750,00"
+        formControlName="income"
+        [ngClass]="aplicaCssErro('income')"
+      />
+    </div>
+    <div class="col-sm-4">
+        <label for="children">Quantidade de Filhos</label>
+        <input
+          type="number"
+          class="form-control mt-1"
+          id="children"
+          placeholder="Ex: 3"
+          formControlName="children"
+        />
+      </div>
+  </div>
+  <div class="buttons mb-5">
+    <button type="submit" class="btn btn-outline-primary mt-3" style="margin-right: 0.5rem;" (click)="onSubmit()">Enviar</button>
+    <button type="button" class="btn btn-outline-danger mt-3">Cancelar</button>
+  </div>
+</form>

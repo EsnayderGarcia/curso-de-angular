@@ -1,39 +1,43 @@
-<main class="mb-5">
-    <div class="card">
-        <div class="card-header">
-          <button class="btn-action">Novo Cliente +</button>
-        </div>
-        <div class="card-body">
-          <blockquote class="blockquote mb-0">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">CPF</th>
-                  <th scope="col">Data de Nascimento</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let c of clients">
-                  <td>{{c.name}}</td>
-                  <td>{{c.cpf | cpf}}</td>
-                  <td>{{c.birthDate | date: "dd/MM/yyyy"}}</td>
-                  <td><button class="btn-action">Detalhes</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </blockquote>
-        </div>
+<main class="mb-5" *ngIf="clients.length > 0">
+  <div class="card">
+    <div class="card-header">
+      <button class="btn-action">Novo Cliente +</button>
     </div>
-
-    <div class="size-page-select mt-3">
-      <label for="size-page">Clientes Por Página:</label>
-      <select name="size" id="size-page" [(ngModel)]="size.value" (change)="popularListaClients()">
-        <option disabled value="null">Selecione</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-      </select>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de Nascimento</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of clients">
+              <td>{{ c.name }}</td>
+              <td>{{ c.cpf | cpf }}</td>
+              <td>{{ c.birthDate | date : "dd/MM/yyyy" }}</td>
+              <td><button class="btn-action">Detalhes</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </blockquote>
     </div>
+  </div>
+  <div class="size-page-select mt-3">
+    <label for="size-page">Clientes Por Página:</label>
+    <select
+      name="size"
+      id="size-page"
+      [(ngModel)]="size.value"
+      (change)="popularListaClients()"
+    >
+      <option disabled value="null">Selecione</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+    </select>
+  </div>
 </main>
