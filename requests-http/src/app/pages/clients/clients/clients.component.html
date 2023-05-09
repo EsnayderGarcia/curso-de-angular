@@ -15,7 +15,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let c of clients">
+            <tr *ngFor="let c of clients | paginate: { 
+              itemsPerPage: itemsPerPage,
+              totalItems: totalItems, 
+              currentPage: currentPage 
+            }">
               <td>{{ c.name }}</td>
               <td>{{ c.cpf | cpf }}</td>
               <td>{{ c.birthDate | date : "dd/MM/yyyy" }}</td>
@@ -26,18 +30,22 @@
       </blockquote>
     </div>
   </div>
-  <div class="size-page-select mt-3">
-    <label for="size-page">Clientes Por Página:</label>
-    <select
-      name="size"
-      id="size-page"
-      [(ngModel)]="size.value"
-      (change)="popularListaClients()"
-    >
-      <option disabled value="null">Selecione</option>
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="15">15</option>
-    </select>
+  <div class="pagination mt-3">
+    <div class="size-page-select">
+      <label for="size-page">Clientes Por Página:</label>
+      <select
+        name="size"
+        id="size-page"
+        [(ngModel)]="size.value"
+        (change)="atualizarPagina()"
+      >
+        <option disabled value="null">Selecione</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+      </select>
+    </div>
+
+    <pagination-controls (pageChange)="atualizarPagina(currentPage = $event)"></pagination-controls>
   </div>
 </main>

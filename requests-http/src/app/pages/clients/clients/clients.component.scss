@@ -18,8 +18,14 @@
     background-image: linear-gradient(to left, #1550F5, #638ae6);
 }
 
-
 .size-page-select {
   display: flex;
   gap: .8rem;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 }

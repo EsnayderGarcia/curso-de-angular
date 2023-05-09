@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IClient } from '../interfaces/iclient';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Page } from '../interfaces/page';
 import { IQueryParameters } from '../interfaces/iquery-parameters';
 import { environment } from 'src/environments/environment';
@@ -23,23 +23,24 @@ export class ClientService {
     private router: Router
   ) {}
 
-  obterUriConsulta(queryParameters: IQueryParameters[]) {
-    let uri = '';
-    uri = this.API + '?';
-              
-    queryParameters.map(q => {
-      if (q.value !== null) uri += `${q.name}=${q.value}&`;
+  private obterParams(queryParameters: IQueryParameters[]) {
+    let params = new HttpParams();
+
+    queryParameters.map((q: any) => {
+      if (q.value !== null) params = params.set(q.name, q.value);
     });
 
-    return uri.substring(0, uri.length - 1);
+    return params;
   }
 
   buscarClientesPaginados(queryParameters: IQueryParameters[]) {
     return this.http
-      .get<Page<IClient>>(this.obterUriConsulta(queryParameters))
+      .get<Page<IClient>>(this.API, {
+        params: this.obterParams(queryParameters),
+      })
       .pipe(
         take(1),
-        catchError(e => {
+        catchError((e) => {
           this.spinner.hide();
           this.alertModalService.abrirModal(
             'Desculpe! Não foi possível obter os dados do servidor, tente novamente mais tarde.',
@@ -49,5 +50,16 @@ export class ClientService {
           return EMPTY;
         })
       );
+  }
+
+  salvarCliente(data: any) {
+    return this.http.post(this.API, data).pipe(
+      take(1),
+      catchError((e: HttpErrorResponse) => {
+        this.spinner.hide();
+        this.alertModalService.abrirModal(e.error.error, Alert.DANGER);
+        return EMPTY;
+      })
+    );
   }
 }

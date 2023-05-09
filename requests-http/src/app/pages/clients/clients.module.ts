@@ -7,6 +7,7 @@ import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import { ClientsFormComponent } from './clients-form/clients-form.component';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients/clients.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ClientsComponent } from './clients/clients.component';
     FormsModule,
     ReactiveFormsModule,
     NgxMaskModule.forChild(),
+    NgxPaginationModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
